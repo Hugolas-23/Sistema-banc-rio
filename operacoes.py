@@ -7,7 +7,7 @@ def criar_conta_pf(conta, conexao, cursor):
         VALUES(%s, %s, %s, %s, %s)
     ''', (conta.nome, conta.saldo, conta.dt_nascimento, conta.tc, conta.cpf))
     conexao.commit()
-    print("CONTA CRIADA")
+    print("\nCONTA CRIADA\n")
 
 
 def criar_conta_pj(conta, conexao, cursor):
@@ -16,7 +16,7 @@ def criar_conta_pj(conta, conexao, cursor):
             VALUES(%s, %s, %s, %s, %s)
         ''', (conta.nome, conta.saldo, conta.dt_nascimento, conta.tc, conta.cnpj))
     conexao.commit()
-    print("CONTA CRIADA")
+    print("\nCONTA CRIADA\n")
 
 
 def transferencia_pf(conexao, cursor, numero):
@@ -30,7 +30,7 @@ def transferencia_pf(conexao, cursor, numero):
        ''', (id_transfere,))
     resultado = cursor.fetchone()
     saldo_transfere = float(resultado[0])
-    id_recebe = int(input('digite o número da conta que irá receber:'))
+    id_recebe = int(input('\nDigite o número da conta que irá receber:\n'))
     valida_numero(cursor, id_recebe)
     cursor.execute('''
        SELECT saldo FROM conta
@@ -52,7 +52,7 @@ def transferencia_pf(conexao, cursor, numero):
         valor_taxa = taxa * valor
         total = valor + valor_taxa
         #O TOTAL É PARA FACILITAR QUANDO PASSAR A VARIÁVEL PARA A FUNÇÃO
-        print(f"SERÁ DESCONTADO O VALOR DE: R${valor_taxa}")
+        print(f"\nSERÁ DESCONTADO O VALOR DE: R${valor_taxa}\n")
         valida_operacao(total, saldo_transfere)
         saldo_transfere -= total
         atualiza_saldo(cursor, conexao, saldo_transfere, id_transfere)
@@ -72,7 +72,7 @@ def transferencia_pj(conexao, cursor, numero):
            ''', (id_transfere,))
     resultado = cursor.fetchone()
     saldo_transfere = float(resultado[0])
-    id_recebe = int(input('digite o id da conta que irá receber:'))
+    id_recebe = int(input('\nDigite o número da conta que irá receber:\n'))
     valida_numero(cursor, id_recebe)
     cursor.execute('''
            SELECT saldo FROM conta
@@ -92,7 +92,7 @@ def transferencia_pj(conexao, cursor, numero):
     else:
         valor_taxa = taxa * valor
         total = valor + valor_taxa
-        print(f"SERÁ DESCONTADO O VALOR DE: R${valor_taxa}")
+        print(f"\nSERÁ DESCONTADO O VALOR DE: R${valor_taxa}\n")
         #O TOTAL É PARA FACILITAR QUANDO PASSAR A VARIÁVEL PARA A FUNÇÃO
         valida_operacao(total, saldo_transfere)
         saldo_transfere -= total
@@ -120,7 +120,7 @@ def deposito_pf(conexao, cursor, numero):
         registrar_transacoes(conexao, cursor, transacao, None, numero, valor, valor_taxa)
     else:
         valor_taxa = taxa * valor
-        print(f"SERÁ DESCONTADO O VALOR DE: R${valor_taxa}")
+        print(f"\nSERÁ DESCONTADO O VALOR DE: R${valor_taxa}\n")
         saldo += (valor - valor_taxa)
         atualiza_saldo(cursor, conexao, saldo, numero)
         registrar_transacoes(conexao, cursor, transacao, None, numero, valor, valor_taxa)
@@ -144,7 +144,7 @@ def deposito_pj(conexao, cursor, numero):
         registrar_transacoes(conexao, cursor, transacao, None, numero, valor, valor_taxa)
     else:
         valor_taxa = taxa * valor
-        print(f"SERÁ DESCONTADO O VALOR DE: R${valor_taxa}")
+        print(f"\nSERÁ DESCONTADO O VALOR DE: R${valor_taxa}\n")
         saldo += (valor - valor_taxa)
         atualiza_saldo(cursor, conexao, saldo, numero)
         registrar_transacoes(conexao, cursor, transacao, None, numero, valor, valor_taxa)
@@ -169,7 +169,7 @@ def saque_pf(conexao, cursor, numero):
         registrar_transacoes(conexao, cursor, transacao, numero, None, valor, valor_taxa)
     else:
         valor_taxa = taxa * valor
-        print(f"SERÁ DESCONTADO O VALOR DE: R${valor_taxa}")
+        print(f"\nSERÁ DESCONTADO O VALOR DE: R${valor_taxa}\n")
         total = valor + valor_taxa
         #MESMA OPERAÇÃO UTILIZADA NA TRANSFERÊNCIA
         valida_operacao(total, saldo)
@@ -197,7 +197,7 @@ def saque_pj(conexao, cursor, numero):
         registrar_transacoes(conexao, cursor, transacao, numero, None, valor, valor_taxa)
     else:
         valor_taxa = taxa * valor
-        print(f"SERÁ DESCONTADO O VALOR DE: R${valor_taxa}")
+        print(f"\nSERÁ DESCONTADO O VALOR DE: R${valor_taxa}\n")
         total = valor + valor_taxa
         valida_operacao(total, saldo)
         saldo -= total

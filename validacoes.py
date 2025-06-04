@@ -1,5 +1,5 @@
 def tipo_conta(cursor):
-    numero = input("DIGITE O NÚMERO DA SUA CONTA")
+    numero = input("\nDigite o número da conta\n")
     valida_numero(cursor, numero)
     cursor.execute(f'''
         SELECT tipo_conta FROM conta
@@ -16,23 +16,23 @@ def atualiza_saldo(cursor, conexao, saldo, numero):
                     WHERE numero = %s
                     ''', (saldo, numero))
     conexao.commit()
-    print("SALDO ATUALIZADO")
+    print("\nSALDO ATUALIZADO\n")
 
 
 def valida_negativo():
-    valor = float(input('digite o valor a ser depositado:'))
+    valor = float(input('\nDigite o valor a ser depositado: \n'))
     if valor <= 0:
-        raise ValueError("VALOR INVÁLIDO")
+        raise ValueError("\nVALOR INVÁLIDO\n")
     else:
-        print("VALOR VALIDADO")
+        print("\nVALOR VALIDADO\n")
         return valor
 
 
 def valida_operacao(valor, saldo):
     if valor > saldo:
-        raise ValueError("OPERAÇÃO INVALIDADA")
+        raise ValueError("\nOPERAÇÃO INVALIDADA\n")
     else:
-        print("OPERAÇÃO VALIDADA")
+        print("\nOPERAÇÃO VALIDADA\n")
 
 
 def valida_numero(cursor, numero):
@@ -42,6 +42,6 @@ def valida_numero(cursor, numero):
     ''', (numero, ))
     teste = cursor.fetchall()
     if len(teste) == 0:
-        raise ValueError("O NÚMERO DA CONTA NÃO EXISTE")
+        raise ValueError("\nO NÚMERO DA CONTA NÃO EXISTE\n")
     else:
-        print("CONTA VALIDADA")
+        print("\nCONTA VALIDADA\n")

@@ -9,9 +9,12 @@ def menu():
     print("Informações da Conta - [8]")
     print('Sair - [0]')
     while True:
-        opcao = int(input("digite:"))
-        if opcao in [1, 2, 3, 4, 5, 6, 7, 8, 0]:
-            break
-        else:
-            print("opção inválida")
+        try:
+            opcao = int(input("\nDigite:\n"))
+            if opcao not in [1, 2, 3, 4, 5, 6, 7, 8, 0]:
+                print("\nOPÇÃO INVÁLIDA\n")
+            else:
+                break
+        except ValueError:
+            print("\nOPÇÃO INVÁLIDA\n")
     return opcao
